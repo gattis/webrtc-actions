@@ -5,7 +5,7 @@ on: [push]
 env:
   WEBRTC_BRANCH: refs/heads/main
   WEBRTC_URL: https://webrtc.googlesource.com/src
-  MSVC_PATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
+  MSVC_PATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC'
 
 jobs:
   config:
