@@ -5,7 +5,7 @@ on: [push]
 env:
   WEBRTC_BRANCH: refs/heads/main
   WEBRTC_URL: https://webrtc.googlesource.com/src
-  MSVC_PATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC'
+  MSVC_PATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
 
 jobs:
   config:
@@ -51,7 +51,7 @@ jobs:
     env:
       DEPOT_TOOLS: ${{ github.workspace }}/depot_tools
       DEPOT_TOOLS_WIN_TOOLCHAIN: 0
-      GNARGS: 'is_component_build=false rtc_include_tests=false treat_warnings_as_errors=false rtc_build_examples=false use_rtti=true target_os=\"${{ matrix.target_os }}\" target_cpu=\"${{ matrix.arch }}\" ${{ matrix.custom_gnargs }}'
+      GNARGS: 'is_component_build=false rtc_include_tests=false treat_warnings_as_errors=true rtc_build_examples=false use_rtti=true target_os=\"${{ matrix.target_os }}\" target_cpu=\"${{ matrix.arch }}\" ${{ matrix.custom_gnargs }}'
       GNARGS_RELEASE: "is_debug=false strip_debug_info=true symbol_level=0"
       OUTPUT_NAME: ${{ needs.config.outputs.name }}-${{ matrix.target_os }}-${{ matrix.arch }}
       TEMP_ARTIFACT: ${{ github.job }}-${{ matrix.target_os }}-${{ matrix.arch }}
@@ -62,7 +62,6 @@ jobs:
         if: ${{ matrix.target_os == 'win' }}
         shell: bash
         run: |
-          ls "C:\Program Files (x86)\Microsoft Visual Studio"
           '${{ env.MSVC_PATH }}\Auxiliary\Build\vcvarsall.bat' ${{ matrix.msvc_arch }}
           MSVC_TOOLS=$(find '${{ env.MSVC_PATH }}\Tools\MSVC' -maxdepth 1 -type d | sort -r | head -n 1)
           echo ${MSVC_TOOLS}'\bin\Hostx64\x64\' >> $GITHUB_PATH
