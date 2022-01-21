@@ -62,6 +62,7 @@ jobs:
         if: ${{ matrix.target_os == 'win' }}
         shell: bash
         run: |
+          ls "C:\Program Files (x86)\Microsoft Visual Studio"
           '${{ env.MSVC_PATH }}\Auxiliary\Build\vcvarsall.bat' ${{ matrix.msvc_arch }}
           MSVC_TOOLS=$(find '${{ env.MSVC_PATH }}\Tools\MSVC' -maxdepth 1 -type d | sort -r | head -n 1)
           echo ${MSVC_TOOLS}'\bin\Hostx64\x64\' >> $GITHUB_PATH
